@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PromptMatrix</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Orbitron', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-deep': '#0a0a0f',
+                        'brand-bg': '#111118',
+                        'brand-surface': 'rgba(28, 28, 38, 0.6)',
+                        'brand-border': 'rgba(255, 255, 255, 0.1)',
+                        'brand-border-hover': 'rgba(99, 102, 241, 0.5)',
+                        'brand-indigo': '#6366f1',
+                        'brand-magenta': '#d946ef',
+                        'brand-text-primary': '#f8fafc',
+                        'brand-text-secondary': '#a1a1aa',
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+                        'background-pan': 'backgroundPan 15s linear infinite',
+                        'shimmer': 'shimmer 1.5s infinite',
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes backgroundPan {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes shimmer {
+            100% { transform: translateX(100%); }
+        }
+        .shimmer-bg {
+            position: relative;
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        .shimmer-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+            transform: translateX(-100%);
+            animation: shimmer 1.5s infinite;
+        }
+
+        /* Custom dot grid background for specific elements */
+        .dot-grid-bg {
+            background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.08) 1px, transparent 0);
+            background-size: 2rem 2rem;
+        }
+        
+        /* Subtle particle background */
+        #particle-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -20;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIxIiBmaWxsPSIjNjM2NmYxIiAvPjxjaXJjbGUgY3g9IjgwIiBjeT0iMjAiIHI9IjEiIGZpbGw9IiM2MzY2ZjEiIC8+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iMSIgZmlsbD0iI2Q5NDZlZiIgLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjgwIiByPSIxIiBmaWxsPSIjZTk0N2VmIiAvPjxjaXJjbGUgY3g9IjgwIiBjeT0iODAiIHI9IjEiIGZpbGw9IiM2MzY2ZjEiIC8+PC9zdmc+');
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: backgroundPan 60s linear infinite;
+        }
+
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.29.0"
+  }
+}
+</script>
+</head>
+<body class="bg-brand-deep text-brand-text-primary font-sans">
+    <div id="particle-bg"></div>
+    <div class="fixed top-0 left-0 w-full h-full -z-10 bg-gradient-to-br from-brand-deep via-brand-bg to-brand-deep"></div>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>

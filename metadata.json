@@ -1,0 +1,7 @@
+{
+  "name": "PromptMatrix",
+  "description": "An AI-powered application that transforms your simple ideas into a matrix of professional, high-quality prompts for generative AI models.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
