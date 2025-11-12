@@ -205,6 +205,9 @@ ${feedback}
 
 export const generateImageFromPrompt = async (prompt: string, aspectRatio: string): Promise<string> => {
     const genAI = getAiClient();
+      // Image generation is not available with the current API setup
+  // Imagen models require Vertex AI which is not configured
+  throw new Error("Image generation is currently unavailable. This feature requires Google Cloud Vertex AI setup. Please contact the administrator to enable this feature.");
     try {
         const response = await genAI.models.generateImages({
             model: 'imagen-4.0-generate-001',
