@@ -205,20 +205,26 @@ ${feedback}
 
 export const generateImageFromPrompt = async (prompt: string, aspectRatio: string): Promise<string> => {
     const genAI = getAiClient();
-      // Image generation is not available with the current API setup
   // Imagen models require Vertex AI which is not configured
-  throw new Error("Image generation is currently unavailable. This feature requires Google Cloud Vertex AI setup. Please contact the administrator to enable this feature.");
     try {
-        const response = await genAI.models.generateImages({
-            model: 'imagen-4.0-generate-001',
-            prompt: prompt,
-            config: {
-                numberOfImages: 1,
-                outputMimeType: 'image/png',
-                aspectRatio: aspectRatio,
-            },
-        });
+    const response = await genAI.models.generateContent({
+      model: 'gemini-2.5-flash-image',
+      contents: [prompt],
+    });
 
+    if (response.parts && response.parts.length > 0) {
+      // Find the image part
+      for (const part of response.parts) {
+        if (part.inline_data && part.inline_data.mime_type?.startsWith('image/')) {
+          const base64ImageBytes = part.inline_data.data;
+          return `data:${part.inline_data.mime_type};base64,${base64ImageBytes}`;
+        }
+      }
+      throw new Error("No image generated in response");
+    } else {
+      throw new Error("The API did not return any images.");
+    }
+  }}
         if (response.generatedImages && response.generatedImages.length > 0) {
             const base64ImageBytes: string = response.generatedImages[0].image.imageBytes;
             return `data:image/png;base64,${base64ImageBytes}`;
