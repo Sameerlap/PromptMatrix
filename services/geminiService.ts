@@ -224,7 +224,7 @@ export const generateImageFromPrompt = async (prompt: string, aspectRatio: strin
     } else {
       throw new Error("The API did not return any images.");
     }
-  }}
+  }
         if (response.generatedImages && response.generatedImages.length > 0) {
             const base64ImageBytes: string = response.generatedImages[0].image.imageBytes;
             return `data:image/png;base64,${base64ImageBytes}`;
